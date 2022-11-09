@@ -2,6 +2,8 @@ import Head from 'next/head'
 import Image from 'next/image'
 // import styles from '../styles/Home.module.css'
 import Header from '../components/header'
+import Footer from '../components/footer'
+import Notepad from '../components/notepad'
 
 export default function Home() {
   return (
@@ -20,8 +22,10 @@ export default function Home() {
 
       </Head>
 
-      <main>
+      <main class="window main-container">
         <Header />
+        <Notepad />
+        <Footer />
       </main>
     </div>
   )
