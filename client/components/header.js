@@ -1,7 +1,7 @@
 export default function Header() {
 
     return (
-        <div class="window w-100">
+        <div class="window main-container">
             <div class="title-bar">
                 <div class="title-bar-text">Notepadify</div>
                 <div class="title-bar-controls">
@@ -10,18 +10,18 @@ export default function Header() {
                     <button aria-label="Close"></button>
                 </div>
             </div>
-            <div class="window-body">
-                <div class="field-row">
+            <div id="content-body">
+                {/* <div class="test"> */}
+                {/* </div> */}
+                {/* <div class="field-row">
                     <label for="title">Title</label>
                     <input type="text" name="title" id="title" />
-                </div>
-                <div class="field-row">
-                    <label for="content">Content</label>
-                    <textarea name="content" id="content" rows="3"></textarea>
-                </div>
-                <div class="field-row">
-                    <button>Save</button>
-                </div>
+                </div> */}
+                {/* <label for="content">Content</label> */}
+                <textarea name="content" id="content"></textarea>
+            </div>
+            <div class="footer">
+                <button id="save-btn">Save</button>
             </div>
         </div>
     )
