@@ -5,6 +5,8 @@
 // Someone smarter than me figure this out. LOL!
 import Notepad from '../../components/notepad'
 import { useEffect, useState } from 'react'
+import Router, { useRouter } from 'next/router'
+import Base from '../../components/base'
 
 async function getNote() {
     const res = await fetch('http://localhost:8000/api/notes/1/', {
@@ -19,17 +21,20 @@ async function getNote() {
 export default function render_note() {
     const [note, setNote] = useState(null);
     const [loading, setLoading] = useState(true);
-    // this should be moved to a component
+    const router = useRouter();
+
     useEffect(() => {
-        getNote().then((data) => {
-            setNote(data)
-            setLoading(false)
-        })
-    }, [])
+        if(router.isReady){
+            getNote().then((data) => {
+                setNote(data)
+                setLoading(false)
+            })
+        }
+    }, [router])
 
     return (
-        <>
+        <Base>
             {loading ? <div>Loading...</div> : <Notepad note={note} />}
-        </>
+        </Base>
     )
 }
