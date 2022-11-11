@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "98.css": "^0.1.18",
+    "create-react-class": "^15.7.0",
     "eslint": "8.27.0",
     "eslint-config-next": "13.0.2",
     "next": "13.0.2",

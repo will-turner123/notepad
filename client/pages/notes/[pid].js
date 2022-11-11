@@ -8,8 +8,8 @@ import { useEffect, useState } from 'react'
 import Router, { useRouter } from 'next/router'
 import Base from '../../components/base'
 
-async function getNote() {
-    const res = await fetch('http://localhost:8000/api/notes/1/', {
+async function getNote(pid) {
+    const res = await fetch(`http://localhost:8000/api/notes/${pid}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -19,22 +19,24 @@ async function getNote() {
 }
 
 export default function render_note() {
+    const router = useRouter()
+    const { pid } = router.query
+    
     const [note, setNote] = useState(null);
     const [loading, setLoading] = useState(true);
-    const router = useRouter();
 
     useEffect(() => {
         if(router.isReady){
-            getNote().then((data) => {
+            getNote(pid).then((data) => {
                 setNote(data)
                 setLoading(false)
             })
         }
     }, [router])
-
+    
     return (
         <Base>
-            {loading ? <div>Loading...</div> : <Notepad note={note} />}
+            {loading ? <div>Loading...</div> : <Notepad note={note} pid={pid} />}
         </Base>
     )
 }
