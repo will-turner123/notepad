@@ -6,7 +6,9 @@ import Footer from '../components/footer'
 class NotepadComponent extends React.Component {
     constructor(props) {
         super(props);
+        
         this.handleChange = this.handleChange.bind(this)
+        this.save_note = this.save_note.bind(this)
         this.state = {
             text: "",
             pid: props.pid
@@ -24,23 +26,27 @@ class NotepadComponent extends React.Component {
     async save_note() {
         let url = 'http://localhost:8000/api/notes/save/'
         if (this.state.pid != undefined) {
-            url += this.state.pid
+            url += this.state.pid + '/'
         }
         const res = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
+            body: JSON.stringify({
+                content: this.state.text,
+            })
+        }).then(resp => resp.json())
+        .then(resp => {
+            if (this.state.pid == undefined && resp.pk != undefined) {
+                this.state.pid = resp.pk
+            }
         })
-        return res.json();
+        // TODO IMPORTANT:
+        // Redirect user to the page of their post, if it's a new post.
     }
 
     render() {
-        //console.log(this.state.pid)
-        // TODO:
-        // We succesfully get the ID of the post in the component.
-        // Now, we just need to call the save_note function of this class,
-        // from the footer component.
         return (
             <>
                 <div id="content-body">
@@ -55,7 +61,7 @@ class NotepadComponent extends React.Component {
                         }}
                     />
                 </div>
-                <Footer />
+                <Footer onClick={ this.save_note }/>
             </>
         )
     }

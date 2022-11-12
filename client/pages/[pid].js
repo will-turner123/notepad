@@ -3,10 +3,10 @@
 // Also the fetch actually gets a response from the server,
 // I have no idea why the default export shit doesn't work tho
 // Someone smarter than me figure this out. LOL!
-import Notepad from '../../components/notepad'
+import Notepad from '../components/notepad'
 import { useEffect, useState } from 'react'
-import Router, { useRouter } from 'next/router'
-import Base from '../../components/base'
+import { useRouter } from 'next/router'
+import Base from '../components/base'
 
 async function getNote(pid) {
     const res = await fetch(`http://localhost:8000/api/notes/${pid}`, {

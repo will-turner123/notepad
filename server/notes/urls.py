@@ -6,5 +6,6 @@ from . import views
 
 urlpatterns = [
     path('<int:pk>/', views.view_note, name='view-note'),
-    path('save/', views.save_note, kwargs={'pk': None}, name='save-note')
+    path('save/', views.save_note, name='save-note'),
+    path('save/<int:pk>/', views.save_note, name='save-note-specific')
 ]
