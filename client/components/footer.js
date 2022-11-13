@@ -4,8 +4,8 @@ export default function Footer(props) {
     const { push } = useRouter();
     function on_save_click() {
         props.onClick()
-        .then((pk) => {
-            push(`/${pk}`)
+        .then(hash_id => {
+            push(`/${hash_id}`)
         })
     }
     

@@ -14,7 +14,6 @@ def save_note(request, pk=None):
     if request.method != "POST":
         return JsonResponse({'error': 'Request is not post type!'}, status=400)
     
-    print(request.body)
     data = json.loads(request.body)
     content = data['content']
     
@@ -25,10 +24,10 @@ def save_note(request, pk=None):
         note = note.first()
         note.content = content
     else:
-        print(123)
         note = Note.objects.create(content=content)
         pk = note.pk
     note.save()
-    print(pk)
     
-    return JsonResponse({'pk': pk}, status=200)
+    hash = note.get_hashid()
+    print(hash)
+    return JsonResponse({'hash': hash}, status=200)

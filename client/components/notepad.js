@@ -36,8 +36,8 @@ class NotepadComponent extends React.Component {
             })
         }).then(resp => resp.json())
         .then(resp => {
-            if (this.state.pid == undefined && resp.pk != undefined) {
-                this.state.pid = resp.pk
+            if (this.state.pid == undefined && resp.hash != undefined) {
+                this.state.pid = resp.hash
             }
         })
         // TODO IMPORTANT:
