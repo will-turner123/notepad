@@ -1,6 +1,4 @@
-var React = require('react');
-
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Footer from '../components/footer'
 
 class NotepadComponent extends React.Component {
@@ -44,6 +42,7 @@ class NotepadComponent extends React.Component {
         })
         // TODO IMPORTANT:
         // Redirect user to the page of their post, if it's a new post.
+        return this.state.pid
     }
 
     render() {
