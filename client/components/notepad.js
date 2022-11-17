@@ -1,69 +1,51 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Footer from '../components/footer'
+import { socket, joinNote, writeNote, SocketContext } from '../contexts/useSocket';
 
-class NotepadComponent extends React.Component {
-    constructor(props) {
-        super(props);
-        
-        this.handleChange = this.handleChange.bind(this)
-        this.save_note = this.save_note.bind(this)
-        this.state = {
-            text: "",
-            pid: props.pid
-        }
-        // make this optional, so you can type on a note that hasn't been saved
-        if (props.note != undefined) {
-            this.state.text = props.note.content;
-        }
-    }
 
-    handleChange(e) {
-        this.setState({text: e.target.value});
-    }
-
-    async save_note() {
-        let url = 'http://localhost:8000/api/notes/save/'
-        if (this.state.pid != undefined) {
-            url += this.state.pid + '/'
+export default function Notepad(props) { 
+    const [content, setContent] = useState(props.note.content);
+    const [note, setNote] = useState(props.note); // redundant unless note object becomes more complex
+    const [joined, setJoined ] = useState(false);
+    const socket = useContext(SocketContext);
+    const [message, setMessage] = useState(socket);
+    
+    useEffect(() => {
+        // TODO: connect to websocket
+        if(!joined){
+            joinNote(note.uuid);
+            setJoined(true);
         }
-        const res = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                content: this.state.text,
-            })
-        }).then(resp => resp.json())
-        .then(resp => {
-            if (this.state.pid == undefined && resp.hash != undefined) {
-                this.state.pid = resp.hash
+        // only refresh component if the message is relevant to this component
+        if(socket !== message){
+            console.log('message', message)
+            if(message.message === 'new-join'){
+                setNote(message.data)
+                setMessage(socket)
+                setContent(message.data.content)
             }
-        })
-        // TODO IMPORTANT:
-        // Redirect user to the page of their post, if it's a new post.
-        return this.state.pid
+        }
+    }, [message, content])
+
+    const handleWrite = (e) => {
+        setContent(e.target.value)
     }
 
-    render() {
-        return (
-            <>
-                <div id="content-body">
-                    <textarea 
-                        name="content"
-                        id="content"
-                        value={this.state.text}
-                        onChange={this.handleChange}
-                        sx={{
-                            width: '100%',
-                            height: '100%',
-                        }}
-                    />
-                </div>
-                <Footer onClick={ this.save_note }/>
-            </>
-        )
-    }
+    return (
+        <>
+            <div id="content-body">
+                <textarea 
+                    name="content"
+                    id="content"
+                    value={content}
+                    onChange={handleWrite}
+                    sx={{
+                        width: '100%',
+                        height: '100%',
+                    }}
+                />
+            </div>
+            <Footer/>
+        </>
+    )
 }
-
-export default NotepadComponent

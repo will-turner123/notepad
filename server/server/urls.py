@@ -15,8 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from notes.urls import urlpatterns as note_urls
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/notes/', include('notes.urls')),
+    path('api/notes/', include(note_urls)),
+    # path('socket.io/', include('socketio_app.urls')),
 ]

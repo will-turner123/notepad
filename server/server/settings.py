@@ -30,11 +30,15 @@ ALLOWED_HOSTS = []
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://localhost:3001",
-    "http://127.0.0.1:3000"
+    "http://127.0.0.1:3000",
+    "http://0.0.0.0:3000",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://127.0.0.1:3000"
+    "http://127.0.0.1:3000",
+    "http://localhost:3000",
+    "http://localhost:300",
+    "http://0.0.0.0:3000",
 ]
 
 # Application definition
@@ -43,6 +47,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'notes.apps.NotesConfig',
+    # 'channels',
+    'socketio_app.apps.SocketioAppConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -50,6 +56,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+# ASGI_APPLICATION = "notes.routing.application"
+
+# CHANNEL_LAYERS = {
+#   "default": {
+#     "BACKEND": "channels_redis.core.RedisChannelLayer",
+#     "CONFIG": {
+#       "hosts": [("127.0.0.1", 6379)],
+#     },
+#   },
+# }
+
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',

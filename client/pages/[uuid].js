@@ -8,8 +8,8 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Base from '../components/base'
 
-async function getNote(pid) {
-    const res = await fetch(`http://localhost:8000/api/notes/${pid}`, {
+async function getNote(uuid) {
+    const res = await fetch(`http://localhost:8000/api/notes/get/${uuid}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -18,25 +18,27 @@ async function getNote(pid) {
     return res.json();
 }
 
-export default function render_note() {
-    const router = useRouter()
-    const { pid } = router.query
-    
+export default function Note() {
+    const router = useRouter();
+    const [uuid, setUuid] = useState('');
     const [note, setNote] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if(router.isReady){
-            getNote(pid).then((data) => {
+        if (router.isReady) {
+            const uuid = router.query.uuid;
+            getNote(uuid).then((data) => {
                 setNote(data)
+                setUuid(uuid)
                 setLoading(false)
             })
         }
-    }, [router])
-    
+        // TODO: connect to websocket
+    }, [router.isReady])
+
     return (
         <Base>
-            {loading ? <div>Loading...</div> : <Notepad note={note} pid={pid} />}
+            {note && <Notepad note={note} />}
         </Base>
     )
 }
