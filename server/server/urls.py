@@ -21,5 +21,4 @@ from notes.urls import urlpatterns as note_urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/notes/', include(note_urls)),
-    # path('socket.io/', include('socketio_app.urls')),
 ]

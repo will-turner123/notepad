@@ -3,7 +3,6 @@ import Footer from '../components/footer'
 import { socket } from '../components/socket';
 
 
-// TODO: if we go with this drunken design pattern, we will have to account for an invalid uuid
 export default function Notepad({ uuid }) { 
 
 
@@ -12,7 +11,7 @@ export default function Notepad({ uuid }) {
     const [onlineUsers, setonlineUsers] = useState(0); // This should eventually be an array
 
     useEffect(() => {
-        // loaded after join-note and any time a new user hops in the note
+
         if( socket.connected ) {
 
             if(loading) {
@@ -59,7 +58,7 @@ export default function Notepad({ uuid }) {
         <>
             <button onClick={doDebugButton}>Debug</button>
             <div id="content-body">
-                {/* <p>debug user count { onlineUsers }</p> */}
+                <p>debug user count { onlineUsers }</p>
                 <textarea 
                     name="content"
                     id="content"
