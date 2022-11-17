@@ -2,20 +2,25 @@ import { createContext, useState, useEffect } from "react";
 import { connect, io } from "socket.io-client";
 // will update every time the socket emits a message
 
-export const socket = io("ws://127.0.0.1:8000/");
+export const socket = io("ws://localhost:8000/socket.io");
+
+// const socket = io(window.location.origin);
 
 export const SocketContext = createContext();
 
 export const SocketProvider = ({ children }) => {
     const [value, setValue] = useState({});
+    const [connected, setConnected] = useState(false);
 
     useEffect(() => {
-        initSockets({ setValue });
-    }, [initSockets]);
+        socket.on("connected", () => {
+            setConnected(true);
+        })
+    }, []);
 
     return (
-        <SocketContext.Provider value={ value } >
-            {children}
+        <SocketContext.Provider value={ connected } >
+            {connected ? children : <p>Connecting to websocket...</p> }
         </SocketContext.Provider>
     );
 };
@@ -53,37 +58,3 @@ export const test = () => {
 export const joinNote = (noteId) => {
     socket.emit('join-note', noteId);
 }
-
-
-
-// import { createContext, useEffect, useState } from 'react';
-// import { Server } from 'socket.io';
-
-// const SocketContext = createContext();
-
-// const SocketProvider = ({ children }) => {
-//     const [socket, setSocket] = useState(null);
-    
-//     useEffect(() => {
-//         if(typeof window !== 'undefined'){
-//             if(!socket){
-//                 console.log('here')
-//                 const io = new Server("ws://localhost:8000/");
-//                 setSocket(io);
-//             }
-//         }
-//     }, [socket]);
-
-//     return (
-//         <SocketContext.Provider value={socket}>
-//             {children}
-//         </SocketContext.Provider>
-//     )
-// }
-
-// const useSocket = () => {
-//     const socket = useContext(SocketContext);
-//     return socket;
-// }
-
-// export { SocketProvider, useSocket }
