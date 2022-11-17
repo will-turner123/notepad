@@ -1,6 +1,15 @@
 # README
 
-This is a step by step guide on setup because this shit be getting confusing no cap
+## Notepadify
+
+A work in progress web app which allows users to generate a link to a text document, similar to Pastebin. Anybody with a link to a notepad can collaboratively edit it in real-time
+
+### Screenshots
+
+![Demo][./demo.gif]
+
+
+### Setup
 
 1. Create a venv
     python -m venv venv

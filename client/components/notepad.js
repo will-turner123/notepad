@@ -10,7 +10,7 @@ export default function Notepad({ uuid }) {
     const [loading, setLoading] = useState(true);
     const [content, setContent] = useState(""); // perhaps null would be more apt?
     const [onlineUsers, setonlineUsers] = useState(0); // This should eventually be an array
-    
+
     useEffect(() => {
         // loaded after join-note and any time a new user hops in the note
         if( socket.connected ) {
@@ -59,7 +59,7 @@ export default function Notepad({ uuid }) {
         <>
             <button onClick={doDebugButton}>Debug</button>
             <div id="content-body">
-                <p>debug user count { onlineUsers }</p>
+                {/* <p>debug user count { onlineUsers }</p> */}
                 <textarea 
                     name="content"
                     id="content"
