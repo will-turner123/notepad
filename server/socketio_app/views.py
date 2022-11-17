@@ -65,14 +65,14 @@ def join(sid, uuid):
 @sio.event(namespace='/socket.io')
 def disconnect(sid):
     logger.info("disconnect ", sid)
-    with sio.session(sid) as session:
+    with sio.session(sid, namespace='/socket.io') as session:
         note_id = session.get("note_id")
         if note_id:
             note = Note.objects.filter(uuid=note_id).first()
             if note:
                 note.online_users -= 1
-                note.save()
                 sio.emit("user-disconnected", {"online_users": note.online_users}, namespace='/socket.io')
+                note.save()
 
 
 @sio.on("write-note", namespace='/socket.io')

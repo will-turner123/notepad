@@ -43,7 +43,6 @@ export default function Notepad({ uuid }) {
     }, [uuid, socket.connected, loading, content, onlineUsers])
 
     const doDebugButton = () => {
-        console.log('debug button clicked')
         socket.emit('join-note', uuid);
     }
 
@@ -52,6 +51,7 @@ export default function Notepad({ uuid }) {
         // some sort of delay might be wise on this for the sake of performance? avoid constant re-renders?
         // setContent(e.target.value)
         console.log('emitting content', content)
+        setContent(e.target.value)
         socket.emit('write-note', {'uuid': uuid, 'content': e.target.value});
     }
 
