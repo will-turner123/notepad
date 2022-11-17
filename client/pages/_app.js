@@ -1,13 +1,11 @@
 import '../styles/globals.css'
 import '98.css'
-import { SocketProvider, useSocket } from '../contexts/useSocket';
+import { socket } from '../components/socket'
 
 function MyApp({ Component, pageProps }) {
   
   return (
-    <SocketProvider>
-      <Component {...pageProps} />
-    </SocketProvider>
+    <Component {...pageProps} />
   )
 }
 

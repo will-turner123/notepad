@@ -20,7 +20,8 @@ export const SocketProvider = ({ children }) => {
 
     return (
         <SocketContext.Provider value={ connected } >
-            {connected ? children : <p>Connecting to websocket...</p> }
+            {/* {connected ? children : <p>Connecting to websocket...</p> } */}
+            {children}
         </SocketContext.Provider>
     );
 };

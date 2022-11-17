@@ -7,7 +7,8 @@ import Notepad from '../components/notepad'
 import { useEffect, useState } from 'react'
 import { useRouter, useContext } from 'next/router'
 import Base from '../components/base'
-import { socket, SocketContext } from '../contexts/useSocket';
+// import { socket, SocketContext } from '../contexts/useSocket';
+import { socket } from '../components/socket';
 
 async function getNote(uuid) {
     const res = await fetch(`http://localhost:8000/api/notes/get/${uuid}`, {
@@ -23,21 +24,17 @@ export default function Note() {
     const router = useRouter();
     const [note, setNote] = useState(null);
     const [loading, setLoading] = useState(true);
-    const connected = useContext(SocketContext);
+    // const connected = useContext(SocketContext);
 
     useEffect(() => {
-        if (router.isReady && connected) {
+        if (router.isReady) {
             const uuid = router.query.uuid;
-            // getNote(uuid).then((data) => {
-            //     setNote(data)
+
             setNote(uuid)
             socket.emit('join-note', {'uuid': uuid});
-                // setUuid(uuid)
-            //     setLoading(false)
-            // })
+
         }
-        // TODO: connect to websocket
-    }, [router.isReady, connected])
+    }, [router.isReady])
 
     return (
         <Base>
