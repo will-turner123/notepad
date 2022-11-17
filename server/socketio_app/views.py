@@ -83,7 +83,7 @@ def write(sid, environ):
         note = Note.objects.filter(uuid=note_id).first()
         if note:
             note.content = content
-            sio.emit("note-updated", {"content": note.content}, namespace='/socket.io', room=note_id)
+            sio.emit("note-updated", {"content": note.content}, namespace='/socket.io', room=note_id, skip_sid=sid)
             note.save()
     else:
         sio.emit("error", {"data": "Note not found", "count": 0})

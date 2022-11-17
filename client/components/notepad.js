@@ -10,7 +10,7 @@ export default function Notepad({ uuid }) {
     const [loading, setLoading] = useState(true);
     const [content, setContent] = useState(""); // perhaps null would be more apt?
     const [onlineUsers, setonlineUsers] = useState(0); // This should eventually be an array
-
+    
     useEffect(() => {
         // loaded after join-note and any time a new user hops in the note
         if( socket.connected ) {
@@ -40,7 +40,7 @@ export default function Notepad({ uuid }) {
             })
 
         }
-    }, [uuid, socket.connected, loading, content, onlineUsers])
+    }, [uuid, socket.connected, loading, onlineUsers])
 
     const doDebugButton = () => {
         socket.emit('join-note', uuid);
@@ -49,7 +49,7 @@ export default function Notepad({ uuid }) {
     const handleWrite = (e) => {
         console.log('e.target.value', e.target.value)
         // some sort of delay might be wise on this for the sake of performance? avoid constant re-renders?
-        // setContent(e.target.value)
+
         console.log('emitting content', content)
         setContent(e.target.value)
         socket.emit('write-note', {'uuid': uuid, 'content': e.target.value});
