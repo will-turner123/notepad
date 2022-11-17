@@ -6,7 +6,7 @@ A work in progress web app which allows users to generate a link to a text docum
 
 ### Screenshots
 
-![Demo][./demo.gif]
+![Demo](./demo.gif)
 
 
 ### Setup
