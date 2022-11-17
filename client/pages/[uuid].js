@@ -31,7 +31,7 @@ export default function Note() {
             const uuid = router.query.uuid;
 
             setNote(uuid)
-            socket.emit('join-note', {'uuid': uuid});
+            // socket.emit('join-note', {'uuid': uuid});
 
         }
     }, [router.isReady])
