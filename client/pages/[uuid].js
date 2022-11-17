@@ -27,18 +27,20 @@ export default function Note() {
     useEffect(() => {
         if (router.isReady) {
             const uuid = router.query.uuid;
-            getNote(uuid).then((data) => {
-                setNote(data)
-                setUuid(uuid)
-                setLoading(false)
-            })
+            // getNote(uuid).then((data) => {
+            //     setNote(data)
+            setNote(uuid)
+                // setUuid(uuid)
+            //     setLoading(false)
+            // })
         }
         // TODO: connect to websocket
     }, [router.isReady])
 
     return (
         <Base>
-            {note && <Notepad note={note} />}
+            {/* {note && <Notepad note={note} />} */}
+            {note && <Notepad uuid={note} />}
         </Base>
     )
 }

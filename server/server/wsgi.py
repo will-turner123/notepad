@@ -15,7 +15,15 @@ from socketio_app.views import sio
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'server.settings')
 
-django_app = get_wsgi_application()
-application = socketio.WSGIApp(sio, django_app)
+# django_app = get_wsgi_application()
+# application = socketio.WSGIApp(sio, django_app)
 import eventlet
-eventlet.wsgi.server(eventlet.listen(('', 8000)), application)
+import eventlet.wsgi
+#eventlet.wsgi.server(eventlet.listen(('', 8000)), application)
+
+
+application = get_wsgi_application()
+
+application = socketio.WSGIApp(sio, application)
+
+eventlet.wsgi.server(eventlet.listen(("", 8000)), application, log_output=False)

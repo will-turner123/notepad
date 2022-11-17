@@ -28,12 +28,13 @@ def connect(sid, environ):
 
 
 @sio.on("authenticate", namespace='/socket.io')
-async def authenticate(sid, environ):
+def authenticate(sid, environ):
     sio.save_session(sid, {"user": "test"})
     # This will be useful if/when we do authentication. Real time notifications
 
 @sio.on("join-note", namespace='/socket.io')
-async def join(sid, environ):
+def join(sid, environ):
+    print('joining a note!!')
     uuid = environ.get("uuid")
     if uuid:
         note = Note.objects.filter(uuid=uuid).first()

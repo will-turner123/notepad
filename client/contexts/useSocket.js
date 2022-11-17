@@ -2,7 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import { connect, io } from "socket.io-client";
 // will update every time the socket emits a message
 
-export const socket = io("http://127.0.0.1:8000/");
+export const socket = io("ws://127.0.0.1:8000/");
 
 export const SocketContext = createContext();
 
@@ -26,7 +26,13 @@ export const initSockets = ({ setValue }) => {
 };
 
 
+// for tomorrow: https://alexboots.medium.com/using-react-context-with-socket-io-3b7205c86a6d
+
 // will update every time the socket emits a message TODO: move to separate file
+// IDEA: Given that the socket is a global variable, we can just import it into any component that needs it
+// ^ that was copilot
+// the setValue is passed. It could be used to set anything
+// Check out Recoil. Could have a global store type of thing
 export const socketEvents = ({ setValue }) => {
     socket.on('connected', (message) => {
         // setValue(state => { return { ...state, message } });
@@ -47,9 +53,6 @@ export const test = () => {
 export const joinNote = (noteId) => {
     socket.emit('join-note', noteId);
 }
-
-
-
 
 
 
